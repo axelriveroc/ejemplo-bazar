@@ -1,5 +1,6 @@
 import HomeIcon from '@mui/icons-material/Home';
 import LoginIcon from '@mui/icons-material/Login';
+import StoreIcon from '@mui/icons-material/Store';
 export const menuItems = [
     {
         id: "login",
@@ -12,5 +13,11 @@ export const menuItems = [
         path: "/",
         title: "Home",
         Icon: HomeIcon
+    },
+    {
+        id: "products",
+        path: "/shop",
+        title: "Shop",
+        Icon: StoreIcon
     }
 ]
