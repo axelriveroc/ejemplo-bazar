@@ -1,7 +1,7 @@
 import { Box, Button, IconButton } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Link } from "react-router-dom";
-const Cart = ({ cart, deleteById, navigate }) => {
+const Cart = ({ cart, deleteById, navigate, total }) => {
   return (
     <div>
       <Box
@@ -30,7 +30,7 @@ const Cart = ({ cart, deleteById, navigate }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            width: { xs: "100%", md: "60%" },
+            width: "100%",
             minHeight: "50vh",
             flexDirection: "column",
             gap: "20px",
@@ -70,12 +70,20 @@ const Cart = ({ cart, deleteById, navigate }) => {
         </Box>
         <Box
           sx={{
-            backgroundColor: "green",
+            backgroundColor: "whitesmoke",
             width: { xs: "100%", md: "30%" },
-            minHeight: "50vh",
+            minHeight: "20vh",
+            borderRadius:"20px",
+            padding: "20px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-evenly"
           }}
         >
-          <h1>Aca el sumari</h1>
+          <h3>Resumen</h3>
+          <h4>Total productos: ${total}.- </h4>
+          <h4>Envio: {total >= 600 ? "GRATIS" : "$1200"}</h4>
+          <h4>Total final con envio: ${total>= 600 ? total  : total + 1200}</h4>
         </Box>
       </Box>
     </div>

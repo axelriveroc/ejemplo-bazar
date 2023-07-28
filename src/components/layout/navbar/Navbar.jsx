@@ -15,13 +15,14 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { useState } from "react";
 import GoBack from "../../common/goBack/GoBack";
-
+import DashboardIcon from "@mui/icons-material/Dashboard";
 const drawerWidth = 200;
 
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const { pathname } = useLocation();
+  const userRol = "admin";
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -35,7 +36,7 @@ function Navbar(props) {
         {menuItems.map(({ id, path, title, Icon }) => {
           return (
             <Link key={id} to={path}>
-              <ListItem disablePadding key={id}>
+              <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
                     <Icon />
@@ -46,6 +47,18 @@ function Navbar(props) {
             </Link>
           );
         })}
+        {userRol === "admin" && (
+          <Link to={"/dashboard"}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary={"Dashboard"} color="primary" />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        )}
       </List>
     </div>
   );
@@ -65,7 +78,9 @@ function Navbar(props) {
         <Toolbar
           sx={{ gap: "20px", display: "flex", justifyContent: "space-between" }}
         >
-          <Box>Bazar-deco</Box>
+          <Link to="/" style={{ color: "white" }}>
+            Bazar-deco
+          </Link>
           <IconButton
             color="secondary.primary"
             aria-label="open drawer"
@@ -105,7 +120,7 @@ function Navbar(props) {
           py: 4,
           width: "100%",
           minHeight: "100vh",
-          px: 2
+          px: 2,
         }}
       >
         <Toolbar />
