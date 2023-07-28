@@ -36,7 +36,7 @@ function Navbar(props) {
               <ListItem disablePadding key={id}>
                 <ListItemButton>
                   <ListItemIcon>
-                    <Icon color="primary"/>
+                    <Icon />
                   </ListItemIcon>
                   <ListItemText primary={title} color="primary" />
                 </ListItemButton>
@@ -89,6 +89,7 @@ function Navbar(props) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: "#1976d2"
             },
           }}
         >

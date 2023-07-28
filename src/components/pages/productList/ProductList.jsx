@@ -1,4 +1,13 @@
-import { Box, Button } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@mui/material";
+import { Link } from "react-router-dom";
 
 const ProductList = ({ products, filterByCategory, category }) => {
   return (
@@ -11,7 +20,7 @@ const ProductList = ({ products, filterByCategory, category }) => {
           flexDirection: { xs: "column", md: "row" },
           columnGap: "30px",
           rowGap: "10px",
-          padding: "0 40px"
+          padding: "0 40px",
         }}
       >
         <Button
@@ -46,21 +55,56 @@ const ProductList = ({ products, filterByCategory, category }) => {
         </Button>
       </Box>
 
-      <div style={{width: "100%"}}>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "30px",
+          marginTop: "50px",
+        }}
+      >
         {products.map((product) => {
           return (
-            <div key={product.id} style={{ width: "100%" }}>
-              <h2>{product.title}</h2>
-              <img
-                src={product.image}
-                alt=""
-                style={{
-                  width: 300,
-                  height: 300,
-                 
-                }}
+            <Card sx={{ width: 385, height: 340 }} key={product.id}>
+              <CardMedia
+                component="img"
+                alt="green iguana"
+                height="140"
+                image={product.image}
               />
-            </div>
+              <CardContent sx={{ height: 140 }}>
+                <Typography gutterBottom variant="h5" component="div">
+                  {product.title}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  {product.description}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  color="text.secondary"
+                  sx={{ fontWeight: "bold" }}
+                  pt={1}
+                >
+                  Precio: ${product.unit_price}.-
+                </Typography>
+              </CardContent>
+              <CardActions
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Link to={`/productDetail/${product.id}`}>
+                  <Button size="small" variant="outlined">
+                    Ver mas
+                  </Button>
+                </Link>
+              </CardActions>
+            </Card>
           );
         })}
       </div>
