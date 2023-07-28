@@ -1,8 +1,19 @@
 import { Box, Button, Card, Typography } from "@mui/material";
+import CartWidget from "../../common/cartWidget/CartWidget";
 
-const ProductDetail = ({ product }) => {
+const ProductDetail = ({
+  product,
+  counter,
+  subOne,
+  addOne,
+  onAdd,
+  initial,
+}) => {
+  console.log({ counter });
   return (
     <>
+      <CartWidget />
+
       <Card
         key={product.id}
         sx={{
@@ -30,7 +41,7 @@ const ProductDetail = ({ product }) => {
         ></Box>
         <Box
           sx={{
-            height: { md: "343px", sm: "302px", xs: "300px" },
+            minHeight: { md: "343px", sm: "302px", xs: "300px" },
             width: { lg: "445px", md: "343px", sm: "572px", xs: "100%" },
             display: "flex",
             marginTop: { md: "0px", xs: "52px" },
@@ -83,17 +94,36 @@ const ProductDetail = ({ product }) => {
                 lineHeight: "25px",
                 width: "100%",
                 textAlign: { xs: "start" },
-                textTransform: "none"
+                textTransform: "none",
               }}
             >
-             Unidades en stock: {product.stock}
+              Unidades en stock: {product.stock}
             </Typography>
+            {initial && (
+              <Typography
+                color={initial === product.stock ? "error" : "primary"}
+                sx={{
+                  fontWeight: "700",
+                  fontSize: "18px",
+                  lineHeight: "25px",
+                  width: "100%",
+                  textAlign: { xs: "start" },
+                  textTransform: "none",
+                }}
+              >
+                {initial === product.stock
+                  ? "Ya tienes el maximo de unidades agregadas al carrito"
+                  : `Ya tienes en el carrito ${initial} U.`}
+              </Typography>
+            )}
+
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
                 width: "300px",
+                flexDirection: { xs: "column", sm: "row" },
               }}
             >
               <Box
@@ -102,35 +132,24 @@ const ProductDetail = ({ product }) => {
                   alignItems: "center",
                   width: "100%",
                   height: "48px",
-                  gap: "20px"
+                  gap: "20px",
+                  justifyContent: { xs: "center" },
                 }}
               >
-                <Button
-                  //   onClick={restar}
-
-                  variant="contained"
-                >
+                <Button onClick={subOne} variant="contained">
                   -
                 </Button>
-                <Typography variant="h5">
-                  2
+                <Typography variant="h5" color={"primary"}>
+                  {counter}
                 </Typography>
-                <Button
-                  //   onClick={sumar}
-
-                  variant="contained"
-                >
+                <Button onClick={addOne} variant="contained">
                   +
                 </Button>
               </Box>
 
               <Box>
-                <Button
-                  // onClick={() => onAdd(contador)}
-                  
-                  variant="contained"
-                >
-                 Agregar
+                <Button onClick={() => onAdd(counter)} variant="contained">
+                  {initial ? "Modificar" : "Agregar"}
                 </Button>
               </Box>
             </Box>

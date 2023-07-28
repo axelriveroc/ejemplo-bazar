@@ -11,15 +11,17 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import { menuItems } from "../../../Router/Navigation";
-import { Link, Outlet } from "react-router-dom";
-import "./Navbar.css"
+import { Link, Outlet, useLocation } from "react-router-dom";
+import "./Navbar.css";
 import { useState } from "react";
+import GoBack from "../../common/goBack/GoBack";
 
 const drawerWidth = 200;
 
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { pathname } = useLocation();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -89,7 +91,7 @@ function Navbar(props) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
-              backgroundColor: "#1976d2"
+              backgroundColor: "#1976d2",
             },
           }}
         >
@@ -103,9 +105,11 @@ function Navbar(props) {
           py: 4,
           width: "100%",
           minHeight: "100vh",
+          px: 2
         }}
       >
         <Toolbar />
+        {pathname !== "/" && <GoBack />}
         <Outlet />
       </Box>
     </Box>

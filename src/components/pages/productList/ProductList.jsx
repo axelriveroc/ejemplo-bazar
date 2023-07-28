@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import CartWidget from "../../common/cartWidget/CartWidget";
 
 const ProductList = ({ products, filterByCategory, category }) => {
   return (
@@ -68,7 +69,7 @@ const ProductList = ({ products, filterByCategory, category }) => {
       >
         {products.map((product) => {
           return (
-            <Card sx={{ width: 385, height: 340 }} key={product.id}>
+            <Card sx={{ width: {xs:300, md:385}, height: {xs:360, md:340} }} key={product.id}>
               <CardMedia
                 component="img"
                 alt="green iguana"
@@ -79,7 +80,7 @@ const ProductList = ({ products, filterByCategory, category }) => {
                 <Typography gutterBottom variant="h5" component="div">
                   {product.title}
                 </Typography>
-                <Typography variant="body1" color="text.secondary">
+                <Typography variant="body1" color="text.secondary" sx={{ height: 50 }}>
                   {product.description}
                 </Typography>
                 <Typography
@@ -95,7 +96,7 @@ const ProductList = ({ products, filterByCategory, category }) => {
                 sx={{
                   width: "100%",
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: {xs:"end", sm: "center"},
                 }}
               >
                 <Link to={`/productDetail/${product.id}`}>
@@ -108,6 +109,7 @@ const ProductList = ({ products, filterByCategory, category }) => {
           );
         })}
       </div>
+        <CartWidget />
     </div>
   );
 };
