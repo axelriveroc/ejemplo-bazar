@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 
@@ -71,6 +71,12 @@ const Login = () => {
               />
             </FormControl>
           </Grid>
+          <Link
+            to="/forgot-password"
+            style={{ color: "steelblue", marginTop: "10px" }}
+          >
+            ¿Olvidaste tu contraseña?
+          </Link>
           <Grid container justifyContent="center" spacing={3} mt={2}>
             <Grid item xs={8} md={5}>
               <Button
