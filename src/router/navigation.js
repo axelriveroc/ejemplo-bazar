@@ -8,6 +8,12 @@ export const menuItems = [
         Icon: LoginIcon
     },
     {
+        id: "register",
+        path: "/register",
+        title: "Register",
+        Icon: LoginIcon
+    },
+    {
         id: "home",
         path: "/",
         title: "Home",
