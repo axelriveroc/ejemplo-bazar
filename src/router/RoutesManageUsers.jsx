@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 const RoutesManageUsers = () => {
-  const isLogged = true;
+  const isLogged = false;
   return <>{isLogged ? <Outlet /> : <Navigate to="/login" />}</>;
 };
 
