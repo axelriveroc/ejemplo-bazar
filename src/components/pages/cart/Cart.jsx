@@ -8,7 +8,7 @@ const Cart = ({ cart, deleteById, navigate, total }) => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <h1>Carrito</h1>
@@ -73,17 +73,17 @@ const Cart = ({ cart, deleteById, navigate, total }) => {
             backgroundColor: "whitesmoke",
             width: { xs: "100%", md: "30%" },
             minHeight: "20vh",
-            borderRadius:"20px",
+            borderRadius: "20px",
             padding: "20px",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-evenly"
+            justifyContent: "space-evenly",
           }}
         >
           <h3>Resumen</h3>
           <h4>Total productos: ${total}.- </h4>
-          <h4>Envio: {total >= 600 ? "GRATIS" : "$1200"}</h4>
-          <h4>Total final con envio: ${total>= 600 ? total  : total + 1200}</h4>
+          <h4>Envio: {"$7"}</h4>
+          <h4>Total final con envio: ${total + 7}</h4>
         </Box>
       </Box>
     </div>

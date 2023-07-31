@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { useLocation } from "react-router-dom";
 import Success from "../../common/success/Success";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 
 const Checkout = () => {
   const { cart, getTotalPrice } = useContext(CartContext);
@@ -93,21 +94,69 @@ const Checkout = () => {
 
   return (
     <div>
+      <Typography variant="h4" color={"primary"} align="center" pb={2}>
+        Terminar compra
+      </Typography>
       {!pagando && !orderId && (
         <div>
-          <input
-            type="text"
-            placeholder="ingrese su nombre"
-            name="name"
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            placeholder="ingrese su email"
-            name="email"
-            onChange={handleChange}
-          />
-          <button onClick={handleBuy}>Seleccione metodo de pago</button>
+          <Grid
+            container
+            rowSpacing={2}
+            columnSpacing={2}
+            alignItems="center"
+            justifyContent={"center"}
+          >
+            <Grid item xs={10} md={5}>
+              <TextField
+                name="name"
+                label="Nombre"
+                fullWidth
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={10} md={5}>
+              <TextField
+                name="lastName"
+                label="Apellido"
+                fullWidth
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={10} md={5}>
+              <TextField
+                name="adress"
+                label="Direccion"
+                fullWidth
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={10} md={5}>
+              <TextField
+                name="cp"
+                label="Codigo postal"
+                fullWidth
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={10} md={5}>
+              <TextField
+                name="phone"
+                label="Telefono"
+                fullWidth
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={10} md={5}></Grid>
+            <Grid item xs={10} >
+              <Button
+                variant="contained"
+                onClick={handleBuy}
+                sx={{ marginTop: "20xp" }}
+              >
+                Seleccione metodo de pago
+              </Button>
+            </Grid>
+          </Grid>
         </div>
       )}
 
