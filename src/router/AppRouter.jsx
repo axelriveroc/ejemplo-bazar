@@ -31,7 +31,7 @@ const AppRouter = () => {
       <Route path="/register" element={<Register />} />
 
       {/* forgot password  */}
-      <Route path="/forgotPassword" element={<ForgotPassword />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
 
       <Route path="*" element={<h1>Not found</h1>} />
     </Routes>
