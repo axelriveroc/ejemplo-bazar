@@ -13,16 +13,18 @@ import Toolbar from "@mui/material/Toolbar";
 import { menuItems } from "../../../Router/Navigation";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import "./Navbar.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import GoBack from "../../common/goBack/GoBack";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import { AuthContext } from "../../../context/AuthContext";
 const drawerWidth = 200;
 
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const { pathname } = useLocation();
-  const userRol = "admin";
+  const { user, handleLogOut } = useContext(AuthContext);
+  const userRol = user?.rol;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -59,6 +61,14 @@ function Navbar(props) {
             </ListItem>
           </Link>
         )}
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleLogOut}>
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Cerrar sesion"} color="primary" />
+          </ListItemButton>
+        </ListItem>
       </List>
     </div>
   );

@@ -15,11 +15,42 @@ import GoogleIcon from "@mui/icons-material/Google";
 
 import { Link, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { db, onSignIn } from "../../../firebaseConfig";
+import { collection, doc, getDoc } from "firebase/firestore";
+import { AuthContext } from "../../../context/AuthContext";
 
 const Login = () => {
+  const { handleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
+  const [userCredentials, setUserCredentials] = useState({
+    email: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    setUserCredentials({ ...userCredentials, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await onSignIn(userCredentials);
+      let user = res.user;
+      let refCollection = collection(db, "users");
+      let refDoc = doc(refCollection, user.uid);
+      let userDoc = await getDoc(refDoc);
+      let finalyUser = {
+        email: user.email,
+        accessToken: user.accessToken,
+        rol: userDoc.data().rol,
+      };
+      handleLogin(finalyUser);
+      navigate("/")
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   return (
@@ -34,7 +65,7 @@ const Login = () => {
         // backgroundColor: theme.palette.secondary.main,
       }}
     >
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <Grid
           container
           rowSpacing={2}
@@ -42,7 +73,12 @@ const Login = () => {
           justifyContent={"center"}
         >
           <Grid item xs={10} md={12}>
-            <TextField name="email" label="Email" fullWidth />
+            <TextField
+              name="email"
+              label="Email"
+              fullWidth
+              onChange={handleChange}
+            />
           </Grid>
           <Grid item xs={10} md={12}>
             <FormControl variant="outlined" fullWidth>
@@ -50,6 +86,8 @@ const Login = () => {
                 Contraseña
               </InputLabel>
               <OutlinedInput
+                name="password"
+                onChange={handleChange}
                 id="outlined-adornment-password"
                 type={showPassword ? "text" : "password"}
                 endAdornment={
@@ -97,6 +135,7 @@ const Login = () => {
                 <Button
                   variant="contained"
                   startIcon={<GoogleIcon />}
+                  type="button"
                   // onClick={handleLoginGoggle}
                   fullWidth
                   sx={{

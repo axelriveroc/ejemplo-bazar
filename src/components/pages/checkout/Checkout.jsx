@@ -7,6 +7,7 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
@@ -15,13 +16,14 @@ import Success from "../../common/success/Success";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 
 const Checkout = () => {
-  const { cart, getTotalPrice } = useContext(CartContext);
+  const { cart, getTotalPrice, clearCart } = useContext(CartContext);
 
   const [userData, setUserData] = useState({
     name: "",
     email: "",
   });
   const [orderId, setOrderId] = useState(null);
+  const [shipmentCost, setShipmentCost] = useState(null)
 
   const [pagando, setPagando] = useState(false);
 
@@ -52,9 +54,15 @@ const Checkout = () => {
         });
       });
       localStorage.removeItem("order");
-      localStorage.removeItem("cart");
+      clearCart()
     }
-  }, [paramValue]);
+  }, [paramValue, clearCart]);
+
+  useEffect(()=>{
+    let refCollection = collection(db, "shipments")
+    let refDoc = doc(refCollection, "mbPzY8utYEsVzUxFahJz")
+    getDoc(refDoc).then(res=> setShipmentCost(res.data().cost))
+  },[])
 
   const createPreference = async () => {
     const newArr = cart.map((product) => {
@@ -68,7 +76,10 @@ const Checkout = () => {
     try {
       const response = await axios.post(
         "http://localhost:8080/create_preference",
-        newArr
+        {
+          items: newArr,
+          shipment_cost: shipmentCost,
+        }
       );
 
       const { id } = response.data;
@@ -109,19 +120,12 @@ const Checkout = () => {
             <Grid item xs={10} md={5}>
               <TextField
                 name="name"
-                label="Nombre"
+                label="Nombre completo"
                 fullWidth
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={10} md={5}>
-              <TextField
-                name="lastName"
-                label="Apellido"
-                fullWidth
-                onChange={handleChange}
-              />
-            </Grid>
+          
             <Grid item xs={10} md={5}>
               <TextField
                 name="adress"
@@ -147,7 +151,7 @@ const Checkout = () => {
               />
             </Grid>
             <Grid item xs={10} md={5}></Grid>
-            <Grid item xs={10} >
+            <Grid item xs={10}>
               <Button
                 variant="contained"
                 onClick={handleBuy}

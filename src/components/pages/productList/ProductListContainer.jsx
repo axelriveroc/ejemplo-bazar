@@ -17,7 +17,6 @@ const ProductListContainer = () => {
       });
       setProducts(arrProducts);
     });
-    console.log("se hace la peticion")
   }, []);
 
   const filterByCategory = (category) => {
