@@ -16,7 +16,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import { Link, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useContext, useState } from "react";
-import { db, onSignIn } from "../../../firebaseConfig";
+import { db, loginWithGoogle, onSignIn } from "../../../firebaseConfig";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { AuthContext } from "../../../context/AuthContext";
 
@@ -29,6 +29,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleChange = (e) => {
     setUserCredentials({ ...userCredentials, [e.target.name]: e.target.value });
   };
@@ -46,13 +47,28 @@ const Login = () => {
         rol: userDoc.data().rol,
       };
       handleLogin(finalyUser);
-      navigate("/")
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const loginGoogle = async () => {
+    try {
+      let res = await loginWithGoogle();
+      let user = res.user;
+      let finalyUser = {
+        email: user.email,
+        accessToken: user.accessToken,
+        rol: "user",
+      };
+      console.log(finalyUser);
+      handleLogin(finalyUser);
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
   return (
     <Box
       sx={{
@@ -136,7 +152,7 @@ const Login = () => {
                   variant="contained"
                   startIcon={<GoogleIcon />}
                   type="button"
-                  // onClick={handleLoginGoggle}
+                  onClick={loginGoogle}
                   fullWidth
                   sx={{
                     color: "white",
