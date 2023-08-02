@@ -14,14 +14,19 @@ import {
 import { useLocation } from "react-router-dom";
 import Success from "../../common/success/Success";
 import { Button, Grid, TextField, Typography } from "@mui/material";
+import { AuthContext } from "../../../context/AuthContext";
 
 const Checkout = () => {
-  const { cart, getTotalPrice, clearCart } = useContext(CartContext);
+  const { cart, getTotalPrice } = useContext(CartContext);
+  const { user } = useContext(AuthContext);
 
   const [userData, setUserData] = useState({
     name: "",
-    email: "",
+    adress: "",
+    cp: "",
+    phone: ""
   });
+
   const [orderId, setOrderId] = useState(null);
   const [shipmentCost, setShipmentCost] = useState(null)
 
@@ -54,9 +59,8 @@ const Checkout = () => {
         });
       });
       localStorage.removeItem("order");
-      clearCart()
     }
-  }, [paramValue, clearCart]);
+  }, [paramValue]);
 
   useEffect(()=>{
     let refCollection = collection(db, "shipments")
@@ -92,7 +96,10 @@ const Checkout = () => {
   const handleBuy = async () => {
     let order = {
       name: userData.name,
-      email: userData.email,
+      adress: userData.adress,
+      phone: userData.phone,
+      cp: userData.cp,
+      email:user?.email ,
       items: cart,
       total,
     };

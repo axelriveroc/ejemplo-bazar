@@ -132,7 +132,7 @@ const Login = () => {
             ¿Olvidaste tu contraseña?
           </Link>
           <Grid container justifyContent="center" spacing={3} mt={2}>
-            <Grid item xs={8} md={5}>
+            <Grid item xs={10} md={5}>
               <Button
                 variant="contained"
                 fullWidth
@@ -146,7 +146,7 @@ const Login = () => {
                 Ingresar
               </Button>
             </Grid>
-            <Grid item xs={8} md={5}>
+            <Grid item xs={10} md={5}>
               <Tooltip title="ingresa con google">
                 <Button
                   variant="contained"
@@ -164,7 +164,7 @@ const Login = () => {
                 </Button>
               </Tooltip>
             </Grid>
-            <Grid item xs={8} md={8}>
+            <Grid item xs={10} md={8}>
               <Typography
                 color={"secondary.primary"}
                 variant={"h6"}
@@ -174,7 +174,7 @@ const Login = () => {
                 ¿Aun no tienes cuenta?
               </Typography>
             </Grid>
-            <Grid item xs={8} md={5}>
+            <Grid item xs={10} md={5}>
               <Tooltip title="ingresa con google">
                 <Button
                   variant="contained"

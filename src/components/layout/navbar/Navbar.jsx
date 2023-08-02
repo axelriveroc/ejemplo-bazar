@@ -10,13 +10,15 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import { menuItems } from "../../../Router/Navigation";
+
 import { Link, Outlet, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { useContext, useState } from "react";
 import GoBack from "../../common/goBack/GoBack";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { AuthContext } from "../../../context/AuthContext";
+import LogoutIcon from '@mui/icons-material/Logout';
+import { menuItems } from "../../../router/navigation";
 const drawerWidth = 200;
 
 function Navbar(props) {
@@ -64,7 +66,7 @@ function Navbar(props) {
         <ListItem disablePadding>
           <ListItemButton onClick={handleLogOut}>
             <ListItemIcon>
-              <DashboardIcon />
+              <LogoutIcon />
             </ListItemIcon>
             <ListItemText primary={"Cerrar sesion"} color="primary" />
           </ListItemButton>

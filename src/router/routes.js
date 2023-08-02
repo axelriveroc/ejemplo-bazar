@@ -3,6 +3,7 @@ import Checkout from "../components/pages/checkout/Checkout";
 import Home from "../components/pages/home/Home";
 import ProductDetailContainer from "../components/pages/productDetail/ProductDetailContainer";
 import ProductListContainer from "../components/pages/productList/ProductListContainer";
+import UserOrders from "../components/pages/userOrders/UserOrders";
 
 export const routes = [
   {
@@ -34,5 +35,10 @@ export const routes = [
     id: "checkout",
     path: "/checkout",
     Element: Checkout,
+  },
+  {
+    id: "userOrders",
+    path: "/user-orders",
+    Element: UserOrders,
   },
 ];

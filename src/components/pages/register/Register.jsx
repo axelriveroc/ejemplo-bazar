@@ -130,7 +130,7 @@ const Register = () => {
             </FormControl>
           </Grid>
           <Grid container justifyContent="center" spacing={3} mt={2}>
-            <Grid item xs={8} md={5}>
+            <Grid item xs={10} md={7}>
               <Button
                 variant="contained"
                 fullWidth
@@ -144,17 +144,13 @@ const Register = () => {
                 Registrarme
               </Button>
             </Grid>
-            <Grid item xs={8} md={5}>
+            <Grid item xs={10} md={7}>
               <Button
                 variant="contained"
                 fullWidth
                 onClick={()=>navigate("/login")}
                 type="button"
-                sx={{
-                  color: "white",
-                  textTransform: "none",
-                  textShadow: "2px 2px 2px grey",
-                }}
+               
               >
                 Regresar
               </Button>
