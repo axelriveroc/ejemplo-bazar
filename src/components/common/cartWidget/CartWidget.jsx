@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 const CartWidget = () => {
   const { getTotalQuantity } = useContext(CartContext);
   let total = getTotalQuantity();
-  console.log("se ejecuta widget");
   return (
     <Link to="/cart">
       <Box

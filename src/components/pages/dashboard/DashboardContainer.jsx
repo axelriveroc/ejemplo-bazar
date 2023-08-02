@@ -1,6 +1,7 @@
 import Dashboard from "./Dashboard";
 
 const DashboardContainer = () => {
+  
   return <Dashboard />;
 };
 
