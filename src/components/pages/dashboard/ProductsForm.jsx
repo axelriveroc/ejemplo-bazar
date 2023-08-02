@@ -1,21 +1,43 @@
-import { Box, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 
-const ProductsForm = () => {
-  const [producData, setProductData] = useState({
+const ProductsForm = ({ productSelected, setProductSelected }) => {
+  const [newProduct, setNewProduct] = useState({
     title: "",
     description: "",
-    stock: 0,
     unit_price: 0,
+    stock: 0,
     category: "",
+    image: "",
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(producData);
+    if (productSelected.title) {
+      let data = {
+        ...productSelected,
+        unit_price: +productSelected.unit_price,
+        stock: +productSelected.stock,
+      };
+      console.log("se actualiza: ", data);
+    } else {
+      let data = {
+        ...newProduct,
+        unit_price: +newProduct.unit_price,
+        stock: +newProduct.stock,
+      };
+      console.log("se crea: ", data);
+    }
   };
   const handleChange = (e) => {
-    setProductData({...producData, [e.target.name]:e.target.value})
+    if (productSelected.title) {
+      setProductSelected({
+        ...productSelected,
+        [e.target.name]: e.target.value,
+      });
+    } else {
+      setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
+    }
   };
 
   return (
@@ -23,34 +45,43 @@ const ProductsForm = () => {
       <form onSubmit={handleSubmit}>
         <TextField
           variant="outlined"
+          defaultValue={productSelected?.title}
           label="nombre"
           name="title"
           onChange={handleChange}
         />
         <TextField
           variant="outlined"
+          defaultValue={productSelected?.description}
           label="descripcion"
           name="description"
           onChange={handleChange}
         />
         <TextField
           variant="outlined"
-          label="stock"
-          name="stock"
-          onChange={handleChange}
-        />
-        <TextField
-          variant="outlined"
+          defaultValue={productSelected?.unit_price}
           label="precio"
           name="unit_price"
           onChange={handleChange}
         />
         <TextField
           variant="outlined"
+          defaultValue={productSelected?.stock}
+          label="stock"
+          name="stock"
+          onChange={handleChange}
+        />
+        <TextField
+          variant="outlined"
+          defaultValue={productSelected?.category}
           label="categoria"
           name="category"
           onChange={handleChange}
         />
+        {/* ACA INPUT FILE  */}
+        <Button type="submit" variant="contained">
+          Crear / modificar
+        </Button>
       </form>
     </Box>
   );
