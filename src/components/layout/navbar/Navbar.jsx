@@ -43,9 +43,9 @@ function Navbar(props) {
               <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
-                    <Icon />
+                    <Icon  sx={{color:"whitesmoke"}} />
                   </ListItemIcon>
-                  <ListItemText primary={title} color="primary" />
+                  <ListItemText primary={title} sx={{color:"whitesmoke"}}  />
                 </ListItemButton>
               </ListItem>
             </Link>
@@ -56,9 +56,9 @@ function Navbar(props) {
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  <DashboardIcon />
+                  <DashboardIcon  sx={{color:"whitesmoke"}} />
                 </ListItemIcon>
-                <ListItemText primary={"Dashboard"} color="primary" />
+                <ListItemText primary={"Dashboard"} sx={{color:"whitesmoke"}}  />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -66,9 +66,9 @@ function Navbar(props) {
         <ListItem disablePadding>
           <ListItemButton onClick={handleLogOut}>
             <ListItemIcon>
-              <LogoutIcon />
+              <LogoutIcon sx={{color: "whitesmoke"}} />
             </ListItemIcon>
-            <ListItemText primary={"Cerrar sesion"} color="primary" />
+            <ListItemText primary={"Cerrar sesion"} sx={{color:"whitesmoke"}} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -90,7 +90,7 @@ function Navbar(props) {
         <Toolbar
           sx={{ gap: "20px", display: "flex", justifyContent: "space-between" }}
         >
-          <Link to="/" style={{ color: "white" }}>
+          <Link to="/" style={{ color: "whitesmoke" }}>
             Bazar-deco
           </Link>
           <IconButton
