@@ -14,13 +14,22 @@ const ProductsForm = ({ productSelected, setProductSelected }) => {
   });
 
   const [file, setFile] = useState(null);
+  const [isImageUpload, setIsImageUpload] = useState(false);
+  const [loadingImage, setLoadingImage] = useState(false);
 
   const handleImage = async () => {
-    let url = await uploadFile(file);
-    if (productSelected.title) {
-      setProductSelected({ ...productSelected, image: url });
-    } else {
-      setNewProduct({ ...newProduct, image: url });
+    try {
+      setLoadingImage(true);
+      let url = await uploadFile(file);
+      setIsImageUpload(true);
+      if (productSelected.title) {
+        setProductSelected({ ...productSelected, image: url });
+      } else {
+        setNewProduct({ ...newProduct, image: url });
+      }
+      setLoadingImage(false);
+    } catch (error) {
+      console.log(error);
     }
   };
   console.log(productSelected);
@@ -104,8 +113,15 @@ const ProductsForm = ({ productSelected, setProductSelected }) => {
         />
         {/* ACA INPUT FILE  */}
         <TextField type="file" onChange={(e) => setFile(e.target.files[0])} />
-        <Button onClick={handleImage}>Cargar imagen</Button>
-        <Button type="submit" variant="contained">
+        {file && (
+          <Button onClick={handleImage} variant="contained" type="button">
+            Cargar imagen
+          </Button>
+        )}
+        {
+          loadingImage && <h5>Cargando...</h5>
+        }
+        <Button type="submit" variant="contained" disabled={!isImageUpload}>
           {productSelected.title ? "Modificar" : "Crear"}
         </Button>
       </form>

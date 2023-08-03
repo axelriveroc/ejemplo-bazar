@@ -16,6 +16,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ProductsForm from "./ProductsForm";
 import { useState } from "react";
+import Swal from 'sweetalert2'
+import { db } from "../../../firebaseConfig";
+import { deleteDoc, doc } from "firebase/firestore";
+
 
 const ProductsList = ({ products }) => {
   const [open, setOpen] = useState(false);
@@ -29,6 +33,22 @@ const ProductsList = ({ products }) => {
     setProductSelected({});
     setOpen(false);
   };
+  const deleteDocById = (id)=>{
+    Swal.fire({
+      title: 'Seguro quieres eliminar este producto?',
+      showDenyButton: true,
+      confirmButtonText: 'Si, eliminar',
+      denyButtonText: `No, cancelar`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        deleteDoc(doc(db, "products", id));
+        Swal.fire('Producto eliminado con exito', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Cancelaste la operacion', '', 'info')
+      }
+    })
+  }
   return (
     <div>
       <Box
@@ -85,7 +105,7 @@ const ProductsList = ({ products }) => {
                   >
                     <EditIcon color="primary" />
                   </IconButton>
-                  <IconButton>
+                  <IconButton onClick={()=>deleteDocById(product.id)}>
                     <DeleteForeverIcon color="primary" />
                   </IconButton>
                 </TableCell>
