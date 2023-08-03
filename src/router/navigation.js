@@ -4,12 +4,7 @@ import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import ShopIcon from '@mui/icons-material/Shop';
 export const menuItems = [
     
-    {
-        id: "register",
-        path: "/register",
-        title: "Register",
-        Icon: LoginIcon
-    },
+   
     {
         id: "home",
         path: "/",
