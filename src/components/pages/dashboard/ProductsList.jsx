@@ -15,15 +15,20 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ProductsForm from "./ProductsForm";
+import { useState } from "react";
 
-const Dashboard = ({
-  products,
-  open,
-  handleClose,
-  handleOpen,
-  productSelected,
-  setProductSelected
-}) => {
+const ProductsList = ({ products }) => {
+  const [open, setOpen] = useState(false);
+  const [productSelected, setProductSelected] = useState({});
+
+  const handleOpen = (product) => {
+    setProductSelected(product);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setProductSelected({});
+    setOpen(false);
+  };
   return (
     <div>
       <Box
@@ -37,7 +42,9 @@ const Dashboard = ({
         <Typography variant="h4" color={"primary"}>
           Productos
         </Typography>
-        <Button variant="contained" onClick={()=>handleOpen({})}>Agregar nuevo producto</Button>
+        <Button variant="contained" onClick={() => handleOpen({})}>
+          Agregar nuevo producto
+        </Button>
       </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -107,11 +114,14 @@ const Dashboard = ({
             p: 4,
           }}
         >
-          <ProductsForm productSelected={productSelected} setProductSelected={setProductSelected} />
+          <ProductsForm
+            productSelected={productSelected}
+            setProductSelected={setProductSelected}
+          />
         </Box>
       </Modal>
     </div>
   );
 };
 
-export default Dashboard;
+export default ProductsList;

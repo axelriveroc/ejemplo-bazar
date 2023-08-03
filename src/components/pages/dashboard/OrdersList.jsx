@@ -1,6 +1,8 @@
 import { Visibility } from "@mui/icons-material";
 import {
+  Box,
   IconButton,
+  Modal,
   Paper,
   Table,
   TableBody,
@@ -10,8 +12,20 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
 
 const OrdersList = ({ orders }) => {
+  const [open, setOpen] = useState(false);
+  const [orderSelected, setOrderSelected] = useState({});
+
+  const handleOpen = (product) => {
+    setOrderSelected(product);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOrderSelected({});
+    setOpen(false);
+  };
   return (
     <div>
       <Typography variant="h4" color={"primary"}>
@@ -39,7 +53,7 @@ const OrdersList = ({ orders }) => {
                   {order.date.toDate().toLocaleString()}
                 </TableCell>
                 <TableCell align="left">
-                  <IconButton>
+                  <IconButton onClick={()=>handleOpen(order)}>
                     <Visibility color="primary" />
                   </IconButton>
                 </TableCell>
@@ -48,6 +62,28 @@ const OrdersList = ({ orders }) => {
           </TableBody>
         </Table>
       </TableContainer>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+         <h2>{orderSelected.id}</h2>
+        </Box>
+      </Modal>
     </div>
   );
 };
