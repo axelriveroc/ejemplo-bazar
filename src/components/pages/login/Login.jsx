@@ -15,13 +15,60 @@ import GoogleIcon from "@mui/icons-material/Google";
 
 import { Link, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { db, loginWithGoogle, onSignIn } from "../../../firebaseConfig";
+import { collection, doc, getDoc } from "firebase/firestore";
+import { AuthContext } from "../../../context/AuthContext";
 
 const Login = () => {
+  const { handleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
+  const [userCredentials, setUserCredentials] = useState({
+    email: "",
+    password: "",
+  });
   const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleChange = (e) => {
+    setUserCredentials({ ...userCredentials, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await onSignIn(userCredentials);
+      let user = res.user;
+      let refCollection = collection(db, "users");
+      let refDoc = doc(refCollection, user.uid);
+      let userDoc = await getDoc(refDoc);
+      let finalyUser = {
+        email: user.email,
+        accessToken: user.accessToken,
+        rol: userDoc.data().rol,
+      };
+      handleLogin(finalyUser);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const loginGoogle = async () => {
+    try {
+      let res = await loginWithGoogle();
+      let user = res.user;
+      let finalyUser = {
+        email: user.email,
+        accessToken: user.accessToken,
+        rol: "user",
+      };
+      console.log(finalyUser);
+      handleLogin(finalyUser);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -34,7 +81,7 @@ const Login = () => {
         // backgroundColor: theme.palette.secondary.main,
       }}
     >
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <Grid
           container
           rowSpacing={2}
@@ -42,14 +89,21 @@ const Login = () => {
           justifyContent={"center"}
         >
           <Grid item xs={10} md={12}>
-            <TextField name="email" label="Email" fullWidth />
+            <TextField
+              name="email"
+              label="Email"
+              fullWidth
+              onChange={handleChange}
+            />
           </Grid>
           <Grid item xs={10} md={12}>
             <FormControl variant="outlined" fullWidth>
               <InputLabel htmlFor="outlined-adornment-password">
-                Password
+                Contraseña
               </InputLabel>
               <OutlinedInput
+                name="password"
+                onChange={handleChange}
                 id="outlined-adornment-password"
                 type={showPassword ? "text" : "password"}
                 endAdornment={
@@ -67,7 +121,7 @@ const Login = () => {
                     </IconButton>
                   </InputAdornment>
                 }
-                label="Password"
+                label="Contraseña"
               />
             </FormControl>
           </Grid>
@@ -78,7 +132,7 @@ const Login = () => {
             ¿Olvidaste tu contraseña?
           </Link>
           <Grid container justifyContent="center" spacing={3} mt={2}>
-            <Grid item xs={8} md={5}>
+            <Grid item xs={10} md={5}>
               <Button
                 variant="contained"
                 fullWidth
@@ -92,12 +146,13 @@ const Login = () => {
                 Ingresar
               </Button>
             </Grid>
-            <Grid item xs={8} md={5}>
+            <Grid item xs={10} md={5}>
               <Tooltip title="ingresa con google">
                 <Button
                   variant="contained"
                   startIcon={<GoogleIcon />}
-                  // onClick={handleLoginGoggle}
+                  type="button"
+                  onClick={loginGoogle}
                   fullWidth
                   sx={{
                     color: "white",
@@ -109,7 +164,7 @@ const Login = () => {
                 </Button>
               </Tooltip>
             </Grid>
-            <Grid item xs={8} md={8}>
+            <Grid item xs={10} md={8}>
               <Typography
                 color={"secondary.primary"}
                 variant={"h6"}
@@ -119,7 +174,7 @@ const Login = () => {
                 ¿Aun no tienes cuenta?
               </Typography>
             </Grid>
-            <Grid item xs={8} md={5}>
+            <Grid item xs={10} md={5}>
               <Tooltip title="ingresa con google">
                 <Button
                   variant="contained"

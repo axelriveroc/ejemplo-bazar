@@ -10,16 +10,23 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import { menuItems } from "../../../Router/Navigation";
-import { Link, Outlet } from "react-router-dom";
-import "./Navbar.css";
-import { useState } from "react";
 
+import { Link, Outlet, useLocation } from "react-router-dom";
+import "./Navbar.css";
+import { useContext, useState } from "react";
+import GoBack from "../../common/goBack/GoBack";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import { AuthContext } from "../../../context/AuthContext";
+import LogoutIcon from '@mui/icons-material/Logout';
+import { menuItems } from "../../../router/navigation";
 const drawerWidth = 200;
 
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { pathname } = useLocation();
+  const { user, handleLogOut } = useContext(AuthContext);
+  const userRol = user?.rol;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -33,17 +40,37 @@ function Navbar(props) {
         {menuItems.map(({ id, path, title, Icon }) => {
           return (
             <Link key={id} to={path}>
-              <ListItem disablePadding key={id}>
+              <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
-                    <Icon color="primary" />
+                    <Icon  sx={{color:"whitesmoke"}} />
                   </ListItemIcon>
-                  <ListItemText primary={title} color="primary" />
+                  <ListItemText primary={title} sx={{color:"whitesmoke"}}  />
                 </ListItemButton>
               </ListItem>
             </Link>
           );
         })}
+        {userRol === "admin" && (
+          <Link to={"/dashboard"}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <DashboardIcon  sx={{color:"whitesmoke"}} />
+                </ListItemIcon>
+                <ListItemText primary={"Dashboard"} sx={{color:"whitesmoke"}}  />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        )}
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleLogOut}>
+            <ListItemIcon>
+              <LogoutIcon sx={{color: "whitesmoke"}} />
+            </ListItemIcon>
+            <ListItemText primary={"Cerrar sesion"} sx={{color:"whitesmoke"}} />
+          </ListItemButton>
+        </ListItem>
       </List>
     </div>
   );
@@ -63,7 +90,9 @@ function Navbar(props) {
         <Toolbar
           sx={{ gap: "20px", display: "flex", justifyContent: "space-between" }}
         >
-          <Box>Bazar-deco</Box>
+          <Link to="/" style={{ color: "whitesmoke" }}>
+            Bazar-deco
+          </Link>
           <IconButton
             color="secondary.primary"
             aria-label="open drawer"
@@ -89,6 +118,7 @@ function Navbar(props) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: "#1976d2",
             },
           }}
         >
@@ -102,9 +132,11 @@ function Navbar(props) {
           py: 4,
           width: "100%",
           minHeight: "100vh",
+          px: 2,
         }}
       >
         <Toolbar />
+        {pathname !== "/" && <GoBack />}
         <Outlet />
       </Box>
     </Box>
