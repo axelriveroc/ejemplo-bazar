@@ -81,7 +81,16 @@ const OrdersList = ({ orders }) => {
             p: 4,
           }}
         >
-         <h2>{orderSelected.id}</h2>
+         <Typography>Productos:</Typography>
+         {
+          orderSelected?.items?.map(product => {
+            return <Box key={product.id} sx={{border: "2px solid steelblue"}}>
+                <h4>{product.title}</h4>
+                <h5>Precio: {product.unit_price}</h5>
+                <h5>Cantidad: {product.quantity}</h5>
+            </Box>
+          })
+         }
         </Box>
       </Modal>
     </div>

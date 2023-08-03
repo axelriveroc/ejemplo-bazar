@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const Success = ({ orderId }) => {
+  
   return (
     <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
       <Box style={{ border: "2px solid red", width: { xs: "90%", sm: "40%" } }}>

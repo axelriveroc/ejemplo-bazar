@@ -38,7 +38,8 @@ const UserOrders = () => {
                 return (
                   <div key={product.id}>
                     <h6>{product.title}</h6>
-                    <h6>{product.unit_price}</h6>
+                    <h6>Precio unitario {product.unit_price}</h6>
+                    <h6>Cantidad: {product.quantity}</h6>
                   </div>
                 );
               })}

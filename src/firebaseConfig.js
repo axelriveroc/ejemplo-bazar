@@ -10,7 +10,8 @@ import {
   signOut,
   sendPasswordResetEmail,
 } from "firebase/auth";
-
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APIKEY,
   authDomain: import.meta.env.VITE_AUTHDOMAIN,
@@ -23,6 +24,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+export const storage = getStorage(app);
 
 // LOGIN
 export const onSignIn = async ({ email, password }) => {
@@ -67,9 +69,16 @@ export const logout = () => {
 export const resetPassword = async (email) => {
   try {
     const data = await sendPasswordResetEmail(auth, email);
-    console.log(data)
+    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
   }
+};
+
+export const uploadFile = async (file) => {
+  const storageRef = ref(storage, v4());
+  await uploadBytes(storageRef, file);
+  let url = await getDownloadURL(storageRef);
+  return url;
 };
