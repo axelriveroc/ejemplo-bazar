@@ -9,7 +9,6 @@ const ProductDetail = ({
   onAdd,
   initial,
 }) => {
-  console.log({ counter });
   return (
     <>
       <CartWidget />

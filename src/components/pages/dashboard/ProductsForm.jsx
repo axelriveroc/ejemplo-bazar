@@ -32,7 +32,6 @@ const ProductsForm = ({ productSelected, setProductSelected, handleClose }) => {
       console.log(error);
     }
   };
-  console.log(productSelected);
 
   const handleSubmit = (e) => {
     e.preventDefault();

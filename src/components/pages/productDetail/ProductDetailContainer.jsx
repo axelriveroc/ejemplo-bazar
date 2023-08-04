@@ -9,7 +9,6 @@ const ProductDetailContainer = () => {
   const { id } = useParams();
   const { getQuantityById, addToCart } = useContext(CartContext);
   const initial = getQuantityById(id);
-  console.log(initial);
   const [product, setProduct] = useState({});
   const [counter, setCounter] = useState(initial || 1);
 

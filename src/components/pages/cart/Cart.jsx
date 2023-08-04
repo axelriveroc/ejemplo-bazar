@@ -2,7 +2,6 @@ import { Box, Button, IconButton } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Link } from "react-router-dom";
 const Cart = ({ cart, deleteById, navigate, total, shipmentCost }) => {
-  console.log(total, shipmentCost)
   return (
     <div>
       <Box

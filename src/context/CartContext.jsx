@@ -57,7 +57,6 @@ const CartContextComponent = ({ children }) => {
 
   const getQuantityById = (id) => {
     let product = cart.find((elemento) => elemento.id === id);
-    console.log(product)
     return product?.quantity;
   };
 
