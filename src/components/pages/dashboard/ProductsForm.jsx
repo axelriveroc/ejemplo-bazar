@@ -3,7 +3,7 @@ import { useState } from "react";
 import { db, uploadFile } from "../../../firebaseConfig";
 import { collection, updateDoc, addDoc, doc } from "firebase/firestore";
 
-const ProductsForm = ({ productSelected, setProductSelected }) => {
+const ProductsForm = ({ productSelected, setProductSelected, handleClose }) => {
   const [newProduct, setNewProduct] = useState({
     title: "",
     description: "",
@@ -44,14 +44,18 @@ const ProductsForm = ({ productSelected, setProductSelected }) => {
         unit_price: +productSelected.unit_price,
         stock: +productSelected.stock,
       };
-      updateDoc(doc(productsCollection, productSelected.id), data);
+      updateDoc(doc(productsCollection, productSelected.id), data).then(() => {
+        handleClose();
+      });
     } else {
       let data = {
         ...newProduct,
         unit_price: +newProduct.unit_price,
         stock: +newProduct.stock,
       };
-      addDoc(productsCollection, data);
+      addDoc(productsCollection, data).then(() => {
+        handleClose();
+      });
     }
   };
   const handleChange = (e) => {
@@ -118,10 +122,12 @@ const ProductsForm = ({ productSelected, setProductSelected }) => {
             Cargar imagen
           </Button>
         )}
-        {
-          loadingImage && <h5>Cargando...</h5>
-        }
-        <Button type="submit" variant="contained" disabled={!isImageUpload}>
+        {loadingImage && <h5>Cargando...</h5>}
+        <Button
+          type="submit"
+          variant="contained"
+          disabled={!isImageUpload && !productSelected.title}
+        >
           {productSelected.title ? "Modificar" : "Crear"}
         </Button>
       </form>

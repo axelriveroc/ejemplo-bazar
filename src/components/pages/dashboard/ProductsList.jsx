@@ -137,6 +137,7 @@ const ProductsList = ({ products }) => {
           <ProductsForm
             productSelected={productSelected}
             setProductSelected={setProductSelected}
+            handleClose={handleClose}
           />
         </Box>
       </Modal>
