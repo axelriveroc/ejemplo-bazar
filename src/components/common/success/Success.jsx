@@ -9,10 +9,10 @@ const Success = ({ orderId }) => {
         <h3>Gracias por tu compra!</h3>
         <h4>
           Tu numero de orden es <span style={{ color: "peru" }}>{orderId}</span>{" "}
-          por favor guarda este numero que te servira para hacer seguimiento de
-          tu pedido
+          Podras ver toda la informacion de tus compras desde la pestaña Mis compras.
         </h4>
         <Link to={"/"}>Aceptar</Link>
+        <Link to={"/user-orders"}>Ir a Mis compras</Link>
       </Box>
     </div>
   );
