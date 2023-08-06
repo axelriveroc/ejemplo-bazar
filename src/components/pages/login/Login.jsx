@@ -61,7 +61,6 @@ const Login = () => {
         accessToken: user.accessToken,
         rol: "user",
       };
-      console.log(finalyUser);
       handleLogin(finalyUser);
       navigate("/");
     } catch (error) {

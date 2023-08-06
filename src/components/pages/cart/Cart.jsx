@@ -1,7 +1,7 @@
 import { Box, Button, IconButton } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Link } from "react-router-dom";
-const Cart = ({ cart, deleteById, navigate, total }) => {
+const Cart = ({ cart, deleteById, navigate, total, shipmentCost }) => {
   return (
     <div>
       <Box
@@ -82,8 +82,8 @@ const Cart = ({ cart, deleteById, navigate, total }) => {
         >
           <h3>Resumen</h3>
           <h4>Total productos: ${total}.- </h4>
-          <h4>Envio: {"$7"}</h4>
-          <h4>Total final con envio: ${total + 7}</h4>
+          <h4>Envio: {shipmentCost}</h4>
+          <h4>Total final con envio: ${total + shipmentCost}</h4>
         </Box>
       </Box>
     </div>
