@@ -173,7 +173,7 @@ const Checkout = () => {
 
       {preferenceId && (
         <Wallet
-          initialization={{ preferenceId }}
+          initialization={{ preferenceId, redirectMode: 'self' }}
           onReady={() => setPagando(true)}
         />
       )}
