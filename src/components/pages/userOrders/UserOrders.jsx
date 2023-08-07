@@ -30,13 +30,13 @@ const UserOrders = () => {
         </Typography>
         {myOrders.map((order) => {
           return (
-            <div key={order.id} style={{border: "2px solid black"}}>
+            <div key={order.id} style={{border: "2px solid black", padding: "20px"}}>
               <h3>Numero de orden: {order.id}</h3>
               <div>Fecha: <h6>{order.date.toDate().toLocaleString()}</h6> </div>
               <h4>Productos: </h4>
               {order.items.map((product) => {
                 return (
-                  <div key={product.id}>
+                  <div key={product.id} style={{border: "2px solid steelblue"}}>
                     <h6>{product.title}</h6>
                     <h6>Precio unitario {product.unit_price}</h6>
                     <h6>Cantidad: {product.quantity}</h6>
