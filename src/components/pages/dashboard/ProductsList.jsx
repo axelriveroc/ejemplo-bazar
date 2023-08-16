@@ -23,17 +23,18 @@ import { deleteDoc, doc } from "firebase/firestore";
 
 const ProductsList = ({ products }) => {
   const [open, setOpen] = useState(false);
-  const [productSelected, setProductSelected] = useState({});
+  const [productSelected, setProductSelected] = useState(null);
 
   const handleOpen = (product) => {
     setProductSelected(product);
     setOpen(true);
   };
   const handleClose = () => {
-    setProductSelected({});
+    setProductSelected(null);
     setOpen(false);
   };
-  const deleteDocById = (id)=>{
+  const deleteDocById = (product)=>{
+    console.log(product)
     Swal.fire({
       title: 'Seguro quieres eliminar este producto?',
       showDenyButton: true,
@@ -42,7 +43,7 @@ const ProductsList = ({ products }) => {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        deleteDoc(doc(db, "products", id));
+        deleteDoc(doc(db, "products", product.id));
         Swal.fire('Producto eliminado con exito', '', 'success')
       } else if (result.isDenied) {
         Swal.fire('Cancelaste la operacion', '', 'info')
@@ -62,7 +63,7 @@ const ProductsList = ({ products }) => {
         <Typography variant="h4" color={"primary"}>
           Productos
         </Typography>
-        <Button variant="contained" onClick={() => handleOpen({})}>
+        <Button variant="contained" onClick={() => handleOpen()}>
           Agregar nuevo producto
         </Button>
       </Box>
@@ -105,7 +106,7 @@ const ProductsList = ({ products }) => {
                   >
                     <EditIcon color="primary" />
                   </IconButton>
-                  <IconButton onClick={()=>deleteDocById(product.id)}>
+                  <IconButton onClick={()=>deleteDocById(product)}>
                     <DeleteForeverIcon color="primary" />
                   </IconButton>
                 </TableCell>

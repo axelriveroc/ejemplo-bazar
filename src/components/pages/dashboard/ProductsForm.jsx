@@ -22,7 +22,7 @@ const ProductsForm = ({ productSelected, setProductSelected, handleClose }) => {
       setLoadingImage(true);
       let url = await uploadFile(file);
       setIsImageUpload(true);
-      if (productSelected.title) {
+      if (productSelected) {
         setProductSelected({ ...productSelected, image: url });
       } else {
         setNewProduct({ ...newProduct, image: url });
@@ -37,7 +37,7 @@ const ProductsForm = ({ productSelected, setProductSelected, handleClose }) => {
     e.preventDefault();
     let productsCollection = collection(db, "products");
 
-    if (productSelected.title) {
+    if (productSelected) {
       let data = {
         ...productSelected,
         unit_price: +productSelected.unit_price,
@@ -58,7 +58,7 @@ const ProductsForm = ({ productSelected, setProductSelected, handleClose }) => {
     }
   };
   const handleChange = (e) => {
-    if (productSelected.title) {
+    if (productSelected) {
       setProductSelected({
         ...productSelected,
         [e.target.name]: e.target.value,
@@ -125,9 +125,9 @@ const ProductsForm = ({ productSelected, setProductSelected, handleClose }) => {
         <Button
           type="submit"
           variant="contained"
-          disabled={!isImageUpload && !productSelected.title}
+          disabled={!isImageUpload && !productSelected}
         >
-          {productSelected.title ? "Modificar" : "Crear"}
+          {productSelected ? "Modificar" : "Crear"}
         </Button>
       </form>
     </Box>
