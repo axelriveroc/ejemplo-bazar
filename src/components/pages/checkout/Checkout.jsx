@@ -79,7 +79,7 @@ const Checkout = () => {
 
     try {
       const response = await axios.post(
-        "https://prueba-back-six.vercel.app",
+        "https://prueba-back-six.vercel.app/create_preference",
         {
           items: newArr,
           shipment_cost: shipmentCost,
