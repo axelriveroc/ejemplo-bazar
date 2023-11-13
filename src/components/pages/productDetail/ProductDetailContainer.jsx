@@ -25,6 +25,7 @@ const ProductDetailContainer = () => {
     };
     addToCart(productAdd);
   };
+  
   function addOne() {
  
     if (product.stock > counter) {

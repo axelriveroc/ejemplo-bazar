@@ -9,6 +9,7 @@ const UserOrders = () => {
   const { user } = useContext(AuthContext);
 
   const [myOrders, setMyOrders] = useState([]);
+
   useEffect(() => {
     const ordersCollection = collection(db, "orders");
     const q = query(ordersCollection, where("email", "==", user.email));
@@ -22,7 +23,9 @@ const UserOrders = () => {
       setMyOrders(arrayOrders);
     });
   }, [user.email]);
+
   return (
+    
     <div>
       <Box>
         <Typography variant="h4" color={"primary"}>

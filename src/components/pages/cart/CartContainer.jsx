@@ -10,11 +10,13 @@ const CartContainer = () => {
   const total = getTotalPrice();
   const navigate = useNavigate();
   const [shipmentCost, setShipmentCost] = useState(null)
+  
   useEffect(()=>{
     let refCollection = collection(db, "shipments")
     let refDoc = doc(refCollection, "mbPzY8utYEsVzUxFahJz")
     getDoc(refDoc).then(res=> setShipmentCost(res.data().cost))
   },[])
+  
   return (
     <>
       {cart.length > 0 ? (
